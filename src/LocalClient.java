@@ -10,47 +10,48 @@ public class LocalClient extends Thread {
     private DataOutputStream doStream;
     private Socket socket;
     private LocalServer localServer;
-    private int PORT;
+    private final int nextPORT;
 
     private boolean token;
-    private final int ID;
     public final static String CALCULATIONS = "CALCULATIONS";
     public final static String READ = "READ";
     public final static String END_TOKEN = "END_TOKEN";
     public final static String HANDSHAKE = "HANDSHAKE";
 
-    public LocalClient(LocalServer localServer, Socket socket, int port, int ID){
+    public LocalClient(LocalServer localServer, String token, String nextPORT){
         this.localServer = localServer;
-       this.socket = socket;
-        this.PORT = port;
-        this.ID = ID;
-        token = false;
-
-        // Averiguem quina direccio IP hem d'utilitzar
-        InetAddress iAddress;
-        try {
-            iAddress = InetAddress.getLocalHost();
-            String IP = iAddress.getHostAddress();
-
-            socket = new Socket (String.valueOf(IP), PORT);
-            doStream = new DataOutputStream(socket.getOutputStream());
-            diStream = new DataInputStream(socket.getInputStream());
-        } catch (ConnectException c){
-            System.err.println("Error! El servidor no esta disponible! (Soc el client " + ID + " i em volia conectar a traves del socket" + port + ")");
-            System.exit(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.token = !token.equals("false");
+        this.nextPORT = Integer.parseInt(nextPORT);
     }
 
 
     @Override
     public void run() {
+        boolean wait = true;
+
+        while (wait) {
+            // Averiguem quina direccio IP hem d'utilitzar
+            InetAddress iAddress;
+            try {
+                iAddress = InetAddress.getLocalHost();
+                String IP = iAddress.getHostAddress();
+
+                socket = new Socket(String.valueOf(IP), nextPORT);
+                doStream = new DataOutputStream(socket.getOutputStream());
+                diStream = new DataInputStream(socket.getInputStream());
+            } catch (ConnectException ignored) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (socket != null) {
+                    wait = false;
+                }
+            }
+        }
+
         try {
             handshake();
-            while (true){
-                talk();
-            }
+            talk();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,31 +62,27 @@ public class LocalClient extends Thread {
      * @throws IOException In case any data stream fails to work
      */
     private void handshake() throws IOException {
+        System.out.println("[CLIENT] - Faig handshake");
         doStream.writeUTF(HANDSHAKE);
-        doStream.writeInt(ID);
-        doStream.writeInt(PORT);
+        doStream.writeInt(nextPORT);
     }
 
     /**
      * Communication between machines via sockets
      * @throws IOException In case the data streams fail to communicate
      */
-    private void talk() throws IOException {
+    public void talk() throws IOException {
         if (token){
             System.out.println("---------------------------------");
-            System.out.println("1.\tCom a client " + ID + " soc qui pot parlar (amb el servidor " + (ID + 1) + ") perque tinc el token a " + token + ". Li demano el valor de la variable");
-            doStream.writeUTF(READ);
-            //doStream.flush();
-            LocalServer.sharedVar = diStream.readInt();
+            System.out.println("[CLIENT - 1].\tLa variable val " + LocalServer.sharedVar + ". Faig els calculs sobre la variable.");
             localServer.useSharedVar();
-            System.out.println("4.\tEnviant resultats del meu calcul a traves del socket.");
+            System.out.println("[CLIENT - 2].\tPOST VALOR: " + LocalServer.sharedVar + ". Envio els resultats a traves del socket al seguent servidor");
             doStream.writeUTF(CALCULATIONS);
             doStream.writeInt(LocalServer.sharedVar);
             token = false;
-            System.out.println("6.\tSoc el client " + ID + " i com que he acabat de parlar i fer els calculs, em canvio el meu token a " + token + " i faig una petició per a que el token del seguent server sigui true");
+            System.out.println("[CLIENT - 3].\tCom que he acabat de parlar i fer els calculs, em canvio el meu token a " + token + " i faig una petició per a que el token del seguent server sigui true");
             doStream.writeUTF(END_TOKEN);
         }
-//        doStream.flush();
     }
 
     /**

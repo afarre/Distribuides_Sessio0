@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef052b6c-8382-43d1-8bac-3763d5480962" name="Default Changelist" comment="" />
+    <list default="true" id="ef052b6c-8382-43d1-8bac-3763d5480962" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Exercici0/LocalClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Exercici0/LocalClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Exercici0/LocalServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Exercici0/LocalServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Exercici0/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Exercici0/main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LocalClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LocalClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LocalServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LocalServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,11 +25,12 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1RK0Tm7k8peA8RhLgV826DWGDCU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../2n/16-17/DPOO/MakiTetrix" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
@@ -36,7 +46,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.main4">
+  <component name="RunManager" selected="Application.main">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -52,6 +62,7 @@
     <configuration name="main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main" />
       <module name="Exercici0" />
+      <option name="PROGRAM_PARAMETERS" value="true 33336 33333" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -59,6 +70,7 @@
     <configuration name="main2" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="main" />
       <module name="Exercici0" />
+      <option name="PROGRAM_PARAMETERS" value="false 33335 33336" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -66,6 +78,7 @@
     <configuration name="main3" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="main" />
       <module name="Exercici0" />
+      <option name="PROGRAM_PARAMETERS" value="false 33334 33335" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -73,6 +86,7 @@
     <configuration name="main4" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="main" />
       <module name="Exercici0" />
+      <option name="PROGRAM_PARAMETERS" value="false 33333 33334" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -130,5 +144,18 @@
       <updated>1569400489963</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

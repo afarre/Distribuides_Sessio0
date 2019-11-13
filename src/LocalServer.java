@@ -5,18 +5,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class LocalServer extends  Thread {
-    private int PORT;
+    private final int PORT;
     private DataInputStream diStream;
     private DataOutputStream doStream;
-    private final int ID;
-    private LocalClient localClient;
+    private LocalClient client;
     public static int sharedVar;
 
-    public LocalServer(LocalClient localClient, int sharedVar, int port, int id){
-        this.PORT = port;
-        this.ID = id;
+
+    public LocalServer(int sharedVar, String arg){
         LocalServer.sharedVar = sharedVar;
+        PORT = Integer.parseInt(arg);
     }
+
 
     @Override
     public void run(){
@@ -57,26 +57,22 @@ public class LocalServer extends  Thread {
      */
     private void readRequest(String request) throws IOException {
         switch (request){
-            case LocalClient.READ:
-                System.out.println("2.\tVALOR: " + sharedVar + " (I'm server " + ID + ")\n[CALCULATING]");
-                doStream.writeInt(sharedVar);
-                break;
-
-            case LocalClient.END_TOKEN:
-                System.out.println("7.\tCanviant el token del client " + ID + " en base a la peticio del client anterior...");
-                localClient.setToken(true);
-                System.out.println("-----------------------------------------");
+            case LocalClient.HANDSHAKE:
+                int port = diStream.readInt();
+                System.out.println("[HANDSHAKE]\tSoc el servidor i rebo missatges del client a traves del port " + port + ".");
                 break;
 
             case LocalClient.CALCULATIONS:
-                sharedVar = diStream.readInt();
-                System.out.println("5.\tActualitzant la variable de sharedVar en el servidor " + ID + ". Ara sharedVal val: " + sharedVar);
+                LocalServer.sharedVar = diStream.readInt();
+                System.out.println("[SERVER - 1].\tActualitzant la variable de sharedVar. Ara sharedVal val: " + sharedVar);
                 break;
 
-            case LocalClient.HANDSHAKE:
-                int id = diStream.readInt();
-                int port = diStream.readInt();
-                System.out.println("[HANDSHAKE]\tSoc el servidor " + ID + " i rebo missatges del client " + id + " a traves del port " + port + ".");
+            case LocalClient.END_TOKEN:
+                System.out.println("[SERVER - 2].\tCanviant el token del meu client en base a la peticio del client anterior...");
+                client.setToken(true);
+                client.talk();
+                System.out.println("-----------------------------------------");
+                break;
         }
     }
 
@@ -94,7 +90,6 @@ public class LocalServer extends  Thread {
                 e.printStackTrace();
             }
         }
-        System.out.println("3.\tPOST VALOR: " + sharedVar + " (I'm server " + ID + ")");
     }
 
     /**
@@ -118,6 +113,10 @@ public class LocalServer extends  Thread {
      * @param localClient Client to be associated
      */
     public void setClient(LocalClient localClient) {
-        this.localClient = localClient;
+        this.client = localClient;
+    }
+
+    public void registerClient(LocalClient client) {
+        this.client = client;
     }
 }
